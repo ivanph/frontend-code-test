@@ -3,6 +3,7 @@ import { FormControl } from 'react-bootstrap';
 import RecipesTable from './components/RecipesTable';
 import IngredientsList from './components/IngredientsList';
 import recipesModel from './recipes.json';
+import storage from './storage';
 
 const App = React.createClass({
 
@@ -12,9 +13,16 @@ const App = React.createClass({
       recipes: recipesModel
     };
   },
+
+  componentDidMount () {
+    const savedSelectedRecipes = JSON.parse(storage.get('selectedRecipes'));
+    this.setState({selectedRecipes: savedSelectedRecipes || []});
+  },
+
   onChecked (index, recipe, state) {
     let selectedRecipes = this.state.selectedRecipes;
     selectedRecipes[index] = state ? recipe : null;
+    storage.save('selectedRecipes', JSON.stringify(selectedRecipes));
     this.setState({ selectedRecipes });
   },
 
