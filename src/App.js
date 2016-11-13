@@ -28,13 +28,11 @@ const App = React.createClass({
 
   onFilterChanged (e) {
     const searchTerm = e.target.value.toLowerCase();
+    // Using some() we check if the ingredient matches the
+    // search term and filter() generates a new array with only
+    // the recipes that match.
     const recipes = recipesModel.filter(recipe => {
-      for (let ingredient of recipe.ingredients) {
-        if (ingredient.toLowerCase().includes(searchTerm)) {
-          return true;
-        }
-      }
-      return false;
+      return recipe.ingredients.some(ingredient => ingredient.toLowerCase().includes(searchTerm));
     });
     this.setState({ recipes });
   },
