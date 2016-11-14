@@ -26,7 +26,7 @@ A live version of the site is available [here](http://ivanph.github.io/frontend-
 
 This app was bootstraped with [create-react-app](https://github.com/facebookincubator/create-react-app).
 Most of this is straight from the project's README.
-
+Make sure you have node version of `4.x` or higher.
 First install all dependencies by running
 
 ```sh
