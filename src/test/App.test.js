@@ -32,6 +32,7 @@ describe('Test IngredientsList component', () => {
     const checkbox = wrapper.find('input[type="checkbox"]').first();
     checkbox.simulate('change');
     expect(wrapper.find('li').length).toBeGreaterThan(0);
+    checkbox.simulate('change');
   });
   it('Displays no ingredients when no recipe is selected', () => {
     expect(wrapper.find('li').length).toBe(0);

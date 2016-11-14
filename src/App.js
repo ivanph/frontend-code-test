@@ -4,26 +4,27 @@ import RecipesTable from './components/RecipesTable';
 import IngredientsList from './components/IngredientsList';
 import recipesModel from './recipes.json';
 import storage from './storage';
+const recipesWithSelected = recipesModel.map(recipe => Object.assign(recipe, {selected: false}));
 
 const App = React.createClass({
 
   getInitialState () {
     return {
-      selectedRecipes: [],
-      recipes: recipesModel
+      recipes: recipesWithSelected,
+      currentRecipes: recipesWithSelected
     };
   },
 
   componentDidMount () {
     const savedSelectedRecipes = JSON.parse(storage.get('selectedRecipes'));
-    this.setState({selectedRecipes: savedSelectedRecipes || []});
+    this.setState({currentRecipes: savedSelectedRecipes || this.state.recipes});
   },
 
   onChecked (index, recipe, state) {
-    let selectedRecipes = this.state.selectedRecipes;
-    selectedRecipes[index] = state ? recipe : null;
-    storage.save('selectedRecipes', JSON.stringify(selectedRecipes));
-    this.setState({ selectedRecipes });
+    let currentRecipes = this.state.currentRecipes;
+    currentRecipes[index].selected = state;
+    storage.save('selectedRecipes', JSON.stringify(currentRecipes));
+    this.setState({ currentRecipes });
   },
 
   onFilterChanged (e) {
@@ -31,10 +32,10 @@ const App = React.createClass({
     // Using some() we check if the ingredient matches the
     // search term and filter() generates a new array with only
     // the recipes that match.
-    const recipes = recipesModel.filter(recipe => {
+    const currentRecipes = this.state.recipes.filter(recipe => {
       return recipe.ingredients.some(ingredient => ingredient.toLowerCase().includes(searchTerm));
     });
-    this.setState({ recipes });
+    this.setState({ currentRecipes });
   },
 
   render () {
@@ -45,11 +46,10 @@ const App = React.createClass({
           onChange={this.onFilterChanged}
           placeholder='Filter by ingredients...' />
         <RecipesTable
-          recipes={this.state.recipes}
-          selectedRecipes={this.state.selectedRecipes}
+          recipes={this.state.currentRecipes}
           onChecked={this.onChecked} />
         <IngredientsList
-          selectedRecipes={this.state.selectedRecipes} />
+          recipes={this.state.currentRecipes} />
       </div>
         );
   }

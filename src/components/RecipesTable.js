@@ -5,8 +5,7 @@ import Row from './Row';
 const RecipesTable = React.createClass({
   propTypes: {
     recipes: React.PropTypes.array.isRequired,
-    onChecked: React.PropTypes.func.isRequired,
-    selectedRecipes: React.PropTypes.array.isRequired
+    onChecked: React.PropTypes.func.isRequired
   },
 
   render () {
@@ -15,7 +14,7 @@ const RecipesTable = React.createClass({
         <Row
           index={index}
           key={`recipe${index}`}
-          checked={this.props.selectedRecipes[index] != null}
+          checked={this.props.recipes[index].selected}
           recipe={recipe}
           onChecked={this.props.onChecked} />
           );

@@ -4,9 +4,10 @@ import React from 'react';
 import { render } from 'enzyme';
 import IngredientsList from '../components/IngredientsList';
 import recipes from '../recipes.json';
+const recipesWithSelected = recipes.slice(0, 5).map(recipe => Object.assign(recipe, {selected: true}));
 
 const props = {
-  selectedRecipes: recipes.slice(0, 5)
+  recipes: recipesWithSelected.slice(0, 5)
 };
 const uniqueIngredients = 32;
 

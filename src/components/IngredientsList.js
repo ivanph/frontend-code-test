@@ -4,14 +4,18 @@ import { ListGroup, ListGroupItem } from 'react-bootstrap';
 const IngredientsList = React.createClass({
 
   propTypes: {
-    selectedRecipes: React.PropTypes.array.isRequired
+    recipes: React.PropTypes.array.isRequired
   },
 
   render () {
-    const allIngredients = this.props.selectedRecipes.reduce((ingredients, recipe) => {
-      if (recipe == null) return ingredients;
+    // Reduce the array of recipes to a single array of only ingredients
+    // for the recipes marked as selected
+    const allIngredients = this.props.recipes.reduce((ingredients, recipe) => {
+      if (!recipe.selected) return ingredients;
       return ingredients.concat(recipe.ingredients);
     }, []);
+    // Creates an array of ingredients from a Set
+    // which will only contain unique values
     const uniqueIngredients = Array.from(new Set(allIngredients)).sort();
     const listItems = uniqueIngredients.map(ingredient => <ListGroupItem key={ingredient}>{ingredient}</ListGroupItem>);
     return (

@@ -4,11 +4,11 @@ import React from 'react';
 import { render } from 'enzyme';
 import RecipesTable from '../components/RecipesTable';
 import recipes from '../recipes.json';
+const recipesWithSelected = recipes.map(recipe => Object.assign(recipe, {selected: false}));
 
 const props = {
-  recipes: recipes,
-  onChecked: jest.fn(),
-  selectedRecipes: []
+  recipes: recipesWithSelected,
+  onChecked: jest.fn()
 };
 
 let wrapper;
