@@ -10,14 +10,13 @@ const App = React.createClass({
 
   getInitialState () {
     return {
-      recipes: recipesWithSelected,
       currentRecipes: recipesWithSelected
     };
   },
 
   componentDidMount () {
     const savedSelectedRecipes = JSON.parse(storage.get('selectedRecipes'));
-    this.setState({currentRecipes: savedSelectedRecipes || this.state.recipes});
+    this.setState({currentRecipes: savedSelectedRecipes || recipesWithSelected});
   },
 
   onChecked (index, recipe, state) {
@@ -32,7 +31,7 @@ const App = React.createClass({
     // Using some() we check if the ingredient matches the
     // search term and filter() generates a new array with only
     // the recipes that match.
-    const currentRecipes = this.state.recipes.filter(recipe => {
+    const currentRecipes = recipesWithSelected.filter(recipe => {
       return recipe.ingredients.some(ingredient => ingredient.toLowerCase().includes(searchTerm));
     });
     this.setState({ currentRecipes });
